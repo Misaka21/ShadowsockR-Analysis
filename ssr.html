@@ -1,0 +1,125 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="description" content="">
+		<meta name="author" content="">
+		<title>SSR Analysis</title>
+		<link rel="stylesheet" href="/zui.min.css">
+
+		<style type="text/css" media="all">
+			body {
+				background-color: #eee;
+			}
+			
+			.form-control {
+				display: inline;
+				width: 48%;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="container">
+			<h3>SSR Analysis</h3>
+			<div class="panel panel-default">
+				<div class="panel-heading">操作按钮</div>
+				<div class="panel-body">
+					<div class="input-group input-group-lg">
+						<span class="input-group-addon" id="sizing-addon1">SSR链接：</span>
+						<input type="text" class="form-control" value="">
+					</div>
+					<button type="button" id="jcip" class="btn btn-default">还原配置</button>
+					<button type="button" id="qk" class="btn btn-default">清空</button>
+				</div>
+			</div>
+			<div class="panel panel-default">
+				<div class="panel-heading">配置页面</div>
+				<div class="panel-body">
+					<div class="input-group input-group-lg">
+						<span class="input-group-addon" id="sizing-addon1">域名：</span>
+						<input type="text" class="form-control" value="">
+					</div>
+					<div class="input-group input-group-lg">
+						<span class="input-group-addon" id="sizing-addon1">端口：</span>
+						<input type="text" class="form-control" value="">
+					</div>
+					<div class="input-group input-group-lg">
+						<span class="input-group-addon" id="sizing-addon1">密码：</span>
+						<input type="text" class="form-control" value="">
+					</div>
+					<div class="input-group input-group-lg">
+						<span class="input-group-addon" id="sizing-addon1">加密：</span>
+						<input type="text" class="form-control" value="">
+					</div>
+					<div class="input-group input-group-lg">
+						<span class="input-group-addon" id="sizing-addon1">协议：</span>
+						<input type="text" class="form-control" value="">
+					</div>
+					<div class="input-group input-group-lg">
+						<span class="input-group-addon" id="sizing-addon1">协议参数：</span>
+						<input type="text" class="form-control">
+					</div>
+					<div class="input-group input-group-lg">
+						<span class="input-group-addon" id="sizing-addon1">混淆方式：</span>
+						<input type="text" class="form-control" value="">
+					</div>
+					<div class="input-group input-group-lg">
+						<span class="input-group-addon" id="sizing-addon1">混淆参数：</span>
+						<input type="text" class="form-control" value="">
+					</div>
+					<div class="input-group input-group-lg">
+						<span class="input-group-addon" id="sizing-addon1">备注：</span>
+						<input type="text" class="form-control" value="">
+					</div>
+					<div class="input-group input-group-lg">
+						<span class="input-group-addon" id="sizing-addon1">Group：</span>
+						<input type="text" class="form-control" value="">
+					</div>
+				</div>
+			</div>
+			<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+			<script src="jquery.base64.js" type="text/javascript" charset="utf-8"></script>
+		</div>
+	</body>
+<script type="text/javascript">
+	$('#jcip').click(function(){
+	var bjk=$('.form-control');
+	var val=bjk[0].value;
+	$.base64.utf8encode = true;
+	var result = $.base64.atob(val.split('/')[2],true);
+	console.log(result);
+	var val1= result.split('/')[0].split(':');
+	var val2= result.split('/')[1].replace('?','').split('&');
+	bjk[1].value=val1[0];
+	bjk[2].value=val1[1];
+	bjk[3].value=$.base64.atob(val1[5],true);
+	bjk[4].value=val1[3];
+	bjk[7].value=val1[4];
+	bjk[5].value=val1[2];
+	//bjk[8].value=val2[0];
+	for (var i = 0; i < val2.length; i++) {
+		ls= val2[i].split('=');
+		switch(ls[0]){
+			case 'obfsparam':
+			bjk[8].value=$.base64.atob(ls[1]);
+			break;
+			case 'protoparam':
+			bjk[6].value=$.base64.atob(ls[1]);
+			break;
+			case 'remarks':
+			bjk[9].value=$.base64.atob(ls[1],true);
+			break;
+			case 'group':
+			bjk[10].value=$.base64.atob(ls[1],true);
+			break;
+		}
+	}
+})
+$('#qk').click(function(){
+	$('.form-control')[0].value='';
+})
+</script>
+</html>
